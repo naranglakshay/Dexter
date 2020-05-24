@@ -7,7 +7,7 @@ Read a Text File File in Java API
 public class FileReadController {
 
 @PostMapping(path = "/readTextFile")
-    public String importExcelFile(@RequestParam("file") MultipartFile file) {
+    public String readTextFile(@RequestParam("file") MultipartFile file) {
 BufferedReader br = new BufferedReader(new FileReader("file.txt"));
 try {
     StringBuilder sb = new StringBuilder();
