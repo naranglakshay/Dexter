@@ -1,0 +1,66 @@
+
+Read a Text File File in Java API
+
+
+@RestController
+@RequestMapping("/api/kunalya")
+public class FileReadController {
+
+@PostMapping(path = "/readTextFile")
+    public String importExcelFile(@RequestParam("file") MultipartFile file) {
+BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+try {
+    StringBuilder sb = new StringBuilder();
+    String line = br.readLine();
+
+    while (line != null) {
+        sb.append(line);
+        sb.append(System.lineSeparator());
+        line = br.readLine();
+    }
+    String everything = sb.toString();
+	return "Successfully File Read";
+} finally {
+    br.close();
+}
+
+}
+
+}
+
+Jo java file bnaoge and ye class file jo mne bheji h aapko FileReadController ye dono name same hona chahie nahi to compiler error aaega java mein
+
+
+
+-------------------------------------------------------
+DOWNLOAD FILE FROM SPECIFIC URL (github.com/kunalya/MyFiles/Asia_Sale_20131224)
+
+--
+http://commons.apache.org/proper/commons-io/javadocs/api-2.4/org/apache/commons/io/FileUtils.html#copyURLToFile(java.net.URL,%20java.io.File)
+Read About Apache Common Utils Here
+
+
+
+--JAR DOWNLOAD FROM HERE  https://commons.apache.org/proper/commons-io/download_io.cgi and import that JAR in your POM.
+
+1)
+
+ // Using common IO
+ public static void downloadFileFromUrlWithCommonsIO(String fileName,
+   String fileUrl) throws MalformedURLException, IOException {
+  FileUtils.copyURLToFile(new URL("https://github.com/kunalya/MyFiles/Asia_Sale_20131224.txt"), new File("C:\Users\(yourUserName)\Desktop"));
+ }
+ ----------------------------
+ 
+ https://docs.oracle.com/javase/7/docs/api/java/nio/channels/FileChannel.html
+ 2ND WAY:- 
+ NON-BLOCKING I/O 
+ // Using NIO
+ private static void downloadFileFromURLUsingNIO(String fileName,String fileUrl) throws IOException {
+  URL url = new URL("https://github.com/kunalya/MyFiles/Asia_Sale_20131224.txt");
+  ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+  FileOutputStream fOutStream = new FileOutputStream("C:\Users\(yourUserName)\Desktop");
+  fOutStream.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+  fOutStream.close();
+  rbc.close();
+ }
